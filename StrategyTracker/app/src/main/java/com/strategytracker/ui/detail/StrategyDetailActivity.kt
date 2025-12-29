@@ -1,14 +1,10 @@
 package com.strategytracker.ui.detail
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.MotionEvent
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -40,6 +36,7 @@ class StrategyDetailActivity : AppCompatActivity() {
     }
 
     private lateinit var tradeLogAdapter: TradeLogAdapter
+    private var isInitialLoad = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,15 +52,15 @@ class StrategyDetailActivity : AppCompatActivity() {
 
         setupToolbar()
         setupTradeLog()
-        setupEditTexts()
         setupExportButton()
         observeData()
+        setupTextWatchers()
     }
 
     private fun setupToolbar() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
+        binding.toolbar.setNavigationOnClickListener { finish() }
     }
 
     private fun setupTradeLog() {
@@ -75,81 +72,41 @@ class StrategyDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupEditTexts() {
-        // Setup click listeners to show keyboard
-        setupEditTextFocus(binding.etDescription)
-        setupEditTextFocus(binding.etProfitAmount)
-        setupEditTextFocus(binding.etLossAmount)
-
-        // Description text watcher
+    private fun setupTextWatchers() {
+        // Description
         binding.etDescription.addTextChangedListener(object : TextWatcher {
-            private var timer: java.util.Timer? = null
-
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
             override fun afterTextChanged(s: Editable?) {
-                timer?.cancel()
-                timer = java.util.Timer()
-                timer?.schedule(object : java.util.TimerTask() {
-                    override fun run() {
-                        runOnUiThread {
-                            viewModel.updateDescription(s.toString())
-                        }
-                    }
-                }, 500)
+                if (!isInitialLoad) {
+                    viewModel.updateDescription(s.toString())
+                }
             }
         })
 
-        // Profit amount
+        // Profit
         binding.etProfitAmount.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
             override fun afterTextChanged(s: Editable?) {
-                val amount = s.toString().toDoubleOrNull() ?: 0.0
-                viewModel.updateProfitAmount(amount)
+                if (!isInitialLoad) {
+                    val amount = s.toString().toDoubleOrNull() ?: 0.0
+                    viewModel.updateProfitAmount(amount)
+                }
             }
         })
 
-        // Loss amount
+        // Loss
         binding.etLossAmount.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
             override fun afterTextChanged(s: Editable?) {
-                val amount = s.toString().toDoubleOrNull() ?: 0.0
-                viewModel.updateLossAmount(amount)
+                if (!isInitialLoad) {
+                    val amount = s.toString().toDoubleOrNull() ?: 0.0
+                    viewModel.updateLossAmount(amount)
+                }
             }
         })
-    }
-
-    private fun setupEditTextFocus(editText: EditText) {
-        editText.setOnClickListener {
-            editText.requestFocus()
-            showKeyboard(editText)
-        }
-
-        editText.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus) {
-                showKeyboard(v as EditText)
-            }
-        }
-
-        editText.setOnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_UP) {
-                editText.requestFocus()
-                showKeyboard(editText)
-            }
-            false
-        }
-    }
-
-    private fun showKeyboard(editText: EditText) {
-        editText.postDelayed({
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
-        }, 100)
     }
 
     private fun setupExportButton() {
@@ -162,22 +119,13 @@ class StrategyDetailActivity : AppCompatActivity() {
         viewModel.strategy.observe(this) { strategy ->
             strategy?.let {
                 supportActionBar?.title = it.name
-
-                if (binding.etDescription.text.toString() != it.description) {
-                    binding.etDescription.setText(it.description)
-                }
-
-                if (binding.etProfitAmount.text.toString().toDoubleOrNull() != it.profitAmount) {
-                    binding.etProfitAmount.setText(
-                        if (it.profitAmount == 0.0) "" else it.profitAmount.toString()
-                    )
-                }
-
-                if (binding.etLossAmount.text.toString().toDoubleOrNull() != it.lossAmount) {
-                    binding.etLossAmount.setText(
-                        if (it.lossAmount == 0.0) "" else it.lossAmount.toString()
-                    )
-                }
+                
+                binding.etDescription.setText(it.description)
+                binding.etProfitAmount.setText(if (it.profitAmount == 0.0) "" else it.profitAmount.toString())
+                binding.etLossAmount.setText(if (it.lossAmount == 0.0) "" else it.lossAmount.toString())
+                
+                // Mark initial load complete after first data
+                isInitialLoad = false
             }
         }
 
@@ -186,20 +134,17 @@ class StrategyDetailActivity : AppCompatActivity() {
         }
 
         viewModel.statistics.observe(this) { stats ->
-            binding.apply {
-                tvTotalTrades.text = "Total Trades: ${stats.totalTrades}"
-                tvWins.text = "Wins: ${stats.wins}"
-                tvLosses.text = "Losses: ${stats.losses}"
-                tvWinRate.text = "Win Rate: ${String.format("%.1f", stats.winRate)}%"
-                tvTotalPnl.text = "Total P&L: ${formatPnL(stats.totalPnL)}"
-                tvTotalPnl.setTextColor(
-                    if (stats.totalPnL >= 0)
-                        ContextCompat.getColor(this@StrategyDetailActivity, R.color.green)
-                    else
-                        ContextCompat.getColor(this@StrategyDetailActivity, R.color.red)
-                )
-            }
-
+            binding.tvTotalTrades.text = "Total Trades: ${stats.totalTrades}"
+            binding.tvWins.text = "Wins: ${stats.wins}"
+            binding.tvLosses.text = "Losses: ${stats.losses}"
+            binding.tvWinRate.text = "Win Rate: ${String.format("%.1f", stats.winRate)}%"
+            binding.tvTotalPnl.text = "Total P&L: ${formatPnL(stats.totalPnL)}"
+            binding.tvTotalPnl.setTextColor(
+                if (stats.totalPnL >= 0)
+                    ContextCompat.getColor(this, R.color.green)
+                else
+                    ContextCompat.getColor(this, R.color.red)
+            )
             setupPieChart(stats.wins, stats.losses)
         }
 
@@ -231,7 +176,6 @@ class StrategyDetailActivity : AppCompatActivity() {
 
     private fun setupPieChart(wins: Int, losses: Int) {
         val pieChart = binding.pieChart
-
         if (wins == 0 && losses == 0) {
             pieChart.setNoDataText("No trades yet")
             pieChart.invalidate()
@@ -269,7 +213,6 @@ class StrategyDetailActivity : AppCompatActivity() {
 
     private fun setupLineChart(pnlData: List<Double>) {
         val lineChart = binding.lineChartPnl
-
         if (pnlData.isEmpty()) {
             lineChart.setNoDataText("No trades yet")
             lineChart.invalidate()
@@ -290,7 +233,6 @@ class StrategyDetailActivity : AppCompatActivity() {
             fillColor = ContextCompat.getColor(this@StrategyDetailActivity, R.color.blue)
             fillAlpha = 50
             valueTextSize = 10f
-            mode = LineDataSet.Mode.LINEAR
         }
 
         lineChart.apply {
@@ -306,7 +248,6 @@ class StrategyDetailActivity : AppCompatActivity() {
 
     private fun setupDailyBarChart(dailyData: List<Pair<String, Double>>) {
         val barChart = binding.barChartDaily
-
         if (dailyData.isEmpty()) {
             barChart.setNoDataText("No trades this month")
             barChart.invalidate()
@@ -322,18 +263,15 @@ class StrategyDetailActivity : AppCompatActivity() {
             else ContextCompat.getColor(this, R.color.red)
         }
 
-        val dataSet = BarDataSet(entries, "Daily P&L - ${DateTimeUtils.getCurrentMonthYear()}").apply {
+        val dataSet = BarDataSet(entries, "Daily P&L").apply {
             setColors(colors)
             valueTextSize = 8f
         }
-
-        val labels = dailyData.map { it.first.takeLast(2) }
 
         barChart.apply {
             data = BarData(dataSet)
             description.isEnabled = false
             xAxis.position = XAxis.XAxisPosition.BOTTOM
-            xAxis.valueFormatter = IndexAxisValueFormatter(labels)
             xAxis.granularity = 1f
             axisRight.isEnabled = false
             legend.isEnabled = true
@@ -344,7 +282,6 @@ class StrategyDetailActivity : AppCompatActivity() {
 
     private fun setupMonthlyBarChart(monthlyData: List<Pair<Int, Double>>) {
         val barChart = binding.barChartMonthly
-
         if (monthlyData.isEmpty()) {
             barChart.setNoDataText("No trades this year")
             barChart.invalidate()
@@ -360,7 +297,7 @@ class StrategyDetailActivity : AppCompatActivity() {
             else ContextCompat.getColor(this, R.color.red)
         }
 
-        val dataSet = BarDataSet(entries, "Monthly P&L - ${DateTimeUtils.getCurrentYear()}").apply {
+        val dataSet = BarDataSet(entries, "Monthly P&L").apply {
             setColors(colors)
             valueTextSize = 10f
         }
