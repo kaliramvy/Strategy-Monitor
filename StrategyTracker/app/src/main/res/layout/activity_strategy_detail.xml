@@ -67,6 +67,9 @@
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_description"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:clickable="true"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="top"
@@ -147,6 +150,9 @@
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/et_profit_amount"
+                                    android:focusable="true"
+                                    android:focusableInTouchMode="true"
+                                    android:clickable="true"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:hint="@string/amount"
@@ -194,6 +200,9 @@
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/et_loss_amount"
+                                    android:focusable="true"
+                                    android:focusableInTouchMode="true"
+                                    android:clickable="true"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:hint="@string/amount"
