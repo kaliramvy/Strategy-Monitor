@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingVertical="12dp"
+    android:gravity="center_vertical">
+
+    <!-- Result Indicator -->
+    <View
+        android:id="@+id/indicator_result"
+        android:layout_width="4dp"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="12dp"
+        android:background="@color/green" />
+
+    <!-- Trade Number -->
+    <TextView
+        android:id="@+id/tv_trade_number"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_secondary"
+        android:textSize="12sp"
+        tools:text="#1" />
+
+    <!-- Entry/Exit Times -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_entry_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textSize="12sp"
+            tools:text="15 Jan 2024, 10:30 AM" />
+
+        <TextView
+            android:id="@+id/tv_exit_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/text_secondary"
+            android:textSize="11sp"
+            tools:text="15 Jan 2024, 11:45 AM" />
+
+    </LinearLayout>
+
+    <!-- Result -->
+    <TextView
+        android:id="@+id/tv_result"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        tools:text="WIN"
+        tools:textColor="@color/green" />
+
+    <!-- P&L -->
+    <TextView
+        android:id="@+id/tv_pnl"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        tools:text="+100.00"
+        tools:textColor="@color/green" />
+
+</LinearLayout>

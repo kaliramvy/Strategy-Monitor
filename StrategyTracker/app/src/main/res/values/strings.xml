@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Strategy Tracker</string>
+    
+    <!-- Home Screen -->
+    <string name="no_strategies">No Strategies Yet</string>
+    <string name="tap_to_add">Tap + to add your first strategy</string>
+    <string name="add_strategy">Add Strategy</string>
+    <string name="activate_overlay">Activate Overlay</string>
+    
+    <!-- Add Strategy Dialog -->
+    <string name="strategy_name">Strategy Name</string>
+    
+    <!-- Strategy Detail -->
+    <string name="strategy_description">Strategy Description</string>
+    <string name="description_hint">Describe your trading strategy, rules, and notes...</string>
+    <string name="trade_settings">Trade Settings</string>
+    <string name="profit">Profit</string>
+    <string name="loss">Loss</string>
+    <string name="amount">Amount</string>
+    <string name="statistics_overview">Statistics Overview</string>
+    <string name="win_loss_ratio">Win/Loss Ratio</string>
+    <string name="cumulative_pnl">Cumulative P&amp;L</string>
+    <string name="daily_pnl">Daily P&amp;L (This Month)</string>
+    <string name="monthly_pnl">Monthly P&amp;L (This Year)</string>
+    <string name="trade_log">Trade Log</string>
+    <string name="download_csv">Download CSV</string>
+    
+    <!-- Overlay Buttons -->
+    <string name="trade_entry">Trade Entry</string>
+    <string name="profit_exit">Profit Exit</string>
+    <string name="loss_exit">Loss Exit</string>
+    
+    <!-- Notifications -->
+    <string name="overlay_notification_title">Trade Overlay Active</string>
+    <string name="overlay_notification_text">Tap to open app</string>
+    
+    <!-- Messages -->
+    <string name="trade_started">Trade Entry Recorded</string>
+    <string name="trade_closed_profit">Trade closed: +%1$s</string>
+    <string name="trade_closed_loss">Trade closed: -%1$s</string>
+    <string name="overlay_activated">Overlay activated</string>
+    <string name="overlay_stopped">Overlay stopped</string>
+    <string name="export_success">CSV exported to Downloads</string>
+    <string name="export_failed">Export failed</string>
+    <string name="no_trades_export">No trades to export</string>
+    
+    <!-- Permissions -->
+    <string name="permission_required">Permission Required</string>
+    <string name="overlay_permission_message">To show overlay buttons over other apps, please grant the \'Display over other apps\' permission.</string>
+    <string name="grant">Grant</string>
+    <string name="cancel">Cancel</string>
+    
+    <!-- Delete Dialog -->
+    <string name="delete_strategy">Delete Strategy</string>
+    <string name="delete_strategy_message">Are you sure you want to delete \'%1$s\'? All trades will be lost.</string>
+    <string name="delete">Delete</string>
+    
+    <!-- General -->
+    <string name="ok">OK</string>
+    <string name="create">Create</string>
+    <string name="stop">Stop</string>
+    <string name="switch_text">Switch</string>
+</resources>

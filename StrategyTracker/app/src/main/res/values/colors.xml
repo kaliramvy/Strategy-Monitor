@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Colors -->
+    <color name="blue">#2196F3</color>
+    <color name="blue_dark">#1976D2</color>
+    <color name="blue_light">#64B5F6</color>
+    <color name="blue_very_light">#E3F2FD</color>
+    
+    <!-- Success/Profit Colors -->
+    <color name="green">#4CAF50</color>
+    <color name="green_dark">#388E3C</color>
+    <color name="green_light">#81C784</color>
+    
+    <!-- Error/Loss Colors -->
+    <color name="red">#F44336</color>
+    <color name="red_dark">#D32F2F</color>
+    <color name="red_light">#E57373</color>
+    
+    <!-- Neutral Colors -->
+    <color name="gray">#9E9E9E</color>
+    <color name="gray_light">#BDBDBD</color>
+    <color name="gray_dark">#616161</color>
+    
+    <!-- Background Colors -->
+    <color name="background">#FAFAFA</color>
+    <color name="background_dark">#121212</color>
+    
+    <!-- Card Colors -->
+    <color name="card_background">#FFFFFF</color>
+    <color name="card_background_dark">#1E1E1E</color>
+    <color name="card_stroke">#E0E0E0</color>
+    
+    <!-- Text Colors -->
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="text_primary_dark">#FFFFFF</color>
+    <color name="text_secondary_dark">#B0B0B0</color>
+    
+    <!-- Status Bar -->
+    <color name="status_bar">#1976D2</color>
+</resources>
