@@ -23,7 +23,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
@@ -57,27 +57,19 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <com.google.android.material.textfield.TextInputLayout
+                    <EditText
+                        android:id="@+id/et_description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:background="@android:drawable/edit_text"
+                        android:gravity="top"
                         android:hint="@string/description_hint"
-                        app:boxStrokeColor="@color/blue"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_description"
-                            android:focusable="true"
-                            android:focusableInTouchMode="true"
-                            android:clickable="true"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="top"
-                            android:inputType="textMultiLine"
-                            android:maxLength="2000"
-                            android:minLines="3" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
+                        android:inputType="textMultiLine|textCapSentences"
+                        android:maxLength="2000"
+                        android:minHeight="100dp"
+                        android:minLines="3"
+                        android:padding="12dp" />
 
                 </LinearLayout>
 
@@ -141,24 +133,15 @@
 
                             </LinearLayout>
 
-                            <com.google.android.material.textfield.TextInputLayout
+                            <EditText
+                                android:id="@+id/et_profit_amount"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
-                                app:boxStrokeColor="@color/green"
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/et_profit_amount"
-                                    android:focusable="true"
-                                    android:focusableInTouchMode="true"
-                                    android:clickable="true"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:hint="@string/amount"
-                                    android:inputType="numberDecimal" />
-
-                            </com.google.android.material.textfield.TextInputLayout>
+                                android:background="@android:drawable/edit_text"
+                                android:hint="@string/amount"
+                                android:inputType="numberDecimal"
+                                android:padding="12dp" />
 
                         </LinearLayout>
 
@@ -191,24 +174,15 @@
 
                             </LinearLayout>
 
-                            <com.google.android.material.textfield.TextInputLayout
+                            <EditText
+                                android:id="@+id/et_loss_amount"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
-                                app:boxStrokeColor="@color/red"
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/et_loss_amount"
-                                    android:focusable="true"
-                                    android:focusableInTouchMode="true"
-                                    android:clickable="true"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:hint="@string/amount"
-                                    android:inputType="numberDecimal" />
-
-                            </com.google.android.material.textfield.TextInputLayout>
+                                android:background="@android:drawable/edit_text"
+                                android:hint="@string/amount"
+                                android:inputType="numberDecimal"
+                                android:padding="12dp" />
 
                         </LinearLayout>
 
@@ -486,6 +460,6 @@
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
