@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Permissions -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
@@ -24,7 +23,6 @@
         android:theme="@style/Theme.StrategyTracker"
         android:exported="true">
 
-        <!-- Main Activity -->
         <activity
             android:name=".ui.home.HomeActivity"
             android:exported="true"
@@ -35,18 +33,17 @@
             </intent-filter>
         </activity>
 
-        <!-- Strategy Detail Activity -->
         <activity
             android:name=".ui.detail.StrategyDetailActivity"
             android:exported="false"
             android:parentActivityName=".ui.home.HomeActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"
             android:theme="@style/Theme.StrategyTracker">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.home.HomeActivity" />
         </activity>
 
-        <!-- Overlay Service -->
         <service
             android:name=".overlay.OverlayService"
             android:enabled="true"
@@ -57,7 +54,6 @@
                 android:value="Trading overlay buttons for quick trade entry/exit logging" />
         </service>
 
-        <!-- Boot Receiver to restore overlay state -->
         <receiver
             android:name=".overlay.BootReceiver"
             android:enabled="true"
@@ -67,7 +63,6 @@
             </intent-filter>
         </receiver>
 
-        <!-- File Provider for CSV export -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
